@@ -25,12 +25,34 @@ public class Member {
 		return "Member: " + name;
 	}
 	public void borrowBook(Book book) {
+		BorrowingService borrowingService = new BorrowingService();
+		boolean success = borrowingService.borrowBook(this, book); 
+		if(success)
+		{
+		// print something
+			System.out.println("Book has been Borrowed");
+		} else {
+		// print something else
+			System.out.println("Book is available");
+		}
+		
 		if (book != null && book.getIsAvailable() == true) {
 			borrowedBooks.add(book);
 			book.setIsAvailable(false);
 		}
 	}
 	public void returnBook(Book book) {
+		BorrowingService borrowingService = new BorrowingService();
+		boolean success = borrowingService.returnBook(this, book); 
+		if(success)
+		{
+		// print something
+			System.out.println("Book has been Returned");
+		} else {
+		// print something else
+			System.out.println("Book is not available");
+		}
+		
 		if (book != null) {
 			borrowedBooks.remove(book);
 			book.setIsAvailable(true);
