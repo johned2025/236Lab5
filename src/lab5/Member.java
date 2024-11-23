@@ -6,7 +6,7 @@ import java.util.Iterator;
 public class Member {
 
 	private String name;
-	private ArrayList<Book> borrowedBooks; // Book class dependency
+	public ArrayList<Book> borrowedBooks; // Book class dependency
 	
 	public Member(String name) {
 		this.name = name;
@@ -33,12 +33,7 @@ public class Member {
 			System.out.println("Book has been Borrowed");
 		} else {
 		// print something else
-			System.out.println("Book is available");
-		}
-		
-		if (book != null && book.getIsAvailable() == true) {
-			borrowedBooks.add(book);
-			book.setIsAvailable(false);
+			System.out.println("Book could not be borrowed");
 		}
 	}
 	public void returnBook(Book book) {
@@ -50,12 +45,7 @@ public class Member {
 			System.out.println("Book has been Returned");
 		} else {
 		// print something else
-			System.out.println("Book is not available");
-		}
-		
-		if (book != null) {
-			borrowedBooks.remove(book);
-			book.setIsAvailable(true);
+			System.out.println("Book could not be returned");
 		}
 	}
 	public void listBorrowedBooks() {
