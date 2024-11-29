@@ -28,6 +28,19 @@ class TestController {
 		librarian.addAudioBook(bookTitle2);
 		librarian.addAudioBook(bookTitle3);
 	}
+	
+	//Part 8 test case
+	@Test
+	void createDifferentBookTypes() {
+		librarian.addPaperBook("Harry Potter");
+		assertEquals(library.findBookByTitle("Harry Potter").toString(), "Paper Book: Harry Potter");
+		
+		librarian.addEbook("Percy Jackson");
+		assertEquals(library.findBookByTitle("Percy Jackson").toString(), "E-Book: Percy Jackson");
+
+		librarian.addAudioBook("Lord of The Rings");
+		assertEquals(library.findBookByTitle("Lord of The Rings").toString(), "Audio Book: Lord of The Rings");
+	}
 
 	@Test
 	void borrowBooksByController() {
