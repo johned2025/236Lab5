@@ -9,7 +9,9 @@ public class BorrowingService implements BorrowingServiceAPI{
 	// borrow and if the member can borrow it
 	//(e.g., item limit, member status).
 	public BorrowingBookResult borrowBook(Member member, Book book) {
-		
+		if (member.getBorrowedBooks() == null || member.getBorrowedBooks().isEmpty()) {
+		    return new BorrowingBookResult(false, "No books are currently borrowed by member: '" + member.getName() + "'.");
+		}
 		if(member.getBorrowedBooks().size()>=3) {// customer has more than 3 borrowed books
 			return new BorrowingBookResult(false, "The member has exceeded their borrowing limit.");
 		}

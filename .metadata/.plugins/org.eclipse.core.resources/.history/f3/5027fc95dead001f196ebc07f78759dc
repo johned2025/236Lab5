@@ -1,0 +1,55 @@
+package lab5;
+
+public class BorrowingService implements BorrowingServiceAPI{
+	BorrowingBookResult result;
+	boolean isSuccess=true;
+	String borrowingMessage;
+	@Override
+	// Here you can implement logic to check if the book is available to
+	// borrow and if the member can borrow it
+	//(e.g., item limit, member status).
+	public BorrowingBookResult borrowBook(Member member, Book book) {
+		if(member.getBorrowedBooks().size()>3) {// customer has more than 3 borrowed books
+			isSuccess = false;
+			borrowingMessage= "The member has exceeded their borrowing limit";
+			return result= new BorrowingBookResult(isSuccess, borrowingMessage);
+		}
+		else if(!book.getIsAvailable()) {
+			isSuccess = false;
+			borrowingMessage="";
+			for(Book a : member.getBorrowedBooks()) {
+				if(book.getTitle().equals(a.getTitle())) {
+					borrowingMessage = "The book is already borrowed by the same member";
+					return result= new BorrowingBookResult(isSuccess, borrowingMessage);
+				}
+			}
+			if(borrowingMessage.equals("")) {
+				borrowingMessage= "The member has exceeded their borrowing limit";
+				return result= new BorrowingBookResult(isSuccess, borrowingMessage);
+			}
+		}
+		
+		borrowingMessage ="Book: " + book+ " was succesfully borrowed";
+		result = new BorrowingBookResult(isSuccess, borrowingMessage);
+		return result; // Return true for success
+	}
+		@Override
+		public BorrowingBookResult returnBook(Member member, Book book) {
+		// Implement logic to handle returning a book
+			isSuccess=false;
+			borrowingMessage="";
+			for(Book a : member.getBorrowedBooks()) {
+				if(book.getTitle().equals(a.getTitle())) { //if the member actually borrowed the book
+					isSuccess=true;
+					break;
+				}
+				
+			}
+			if(isSuccess== false) borrowingMessage = "The member has not borrowed the book";
+			
+			System.out.println("Returning book: " + book);
+			return result = new BorrowingBookResult(isSuccess, borrowingMessage);
+		}
+
+
+}

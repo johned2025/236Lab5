@@ -1,0 +1,75 @@
+package lab5;
+
+public class BorrowingService implements BorrowingServiceAPI{
+<<<<<<< Updated upstream
+
+		@Override
+		public boolean borrowBook(Member member, Book book) {
+			System.out.println("Borrowing book: " + book);
+			if (book != null && book.getIsAvailable() == true && !member.getBorrowedBooks().contains(book)) {
+				member.borrowedBooks.add(book);
+				book.setIsAvailable(false);
+				return true;
+			}
+			return false;
+=======
+	BorrowingBookResult result;
+	boolean isSuccess;
+	String borrowingMessage;
+	@Override
+	// Here you can implement logic to check if the book is available to
+	// borrow and if the member can borrow it
+	//(e.g., item limit, member status).
+	public BorrowingBookResult borrowBook(Member member, Book book) {
+		if(member.getBorrowedBooks().size()>3) {// customer has more than 3 borrowed books
+			isSuccess = false;
+			borrowingMessage= "The member has exceeded their borrowing limit";
+>>>>>>> Stashed changes
+		}
+		else if(!book.getIsAvailable()) {
+			isSuccess = false;
+			borrowingMessage="";
+			for(Book a : member.getBorrowedBooks()) {
+				if(book.getTitle().equals(a.getTitle())) {
+					borrowingMessage = "The book is already borrowed by the same member";
+				}
+			}
+			if(borrowingMessage.equals("")) {
+				borrowingMessage= "The member has exceeded their borrowing limit";
+			}
+		}
+		System.out.println(borrowingMessage + book);
+		result = new BorrowingBookResult(isSuccess, borrowingMessage);
+		return result; // Return true for success
+	}
+		@Override
+<<<<<<< Updated upstream
+		public boolean returnBook(Member member, Book book) {
+			System.out.println("Returning book: " + book);
+			if (member.getBorrowedBooks().contains(book)) {
+				member.borrowedBooks.remove(book);
+				book.setIsAvailable(true);
+				return true;
+			}
+			return false;
+    }
+=======
+		public BorrowingBookResult returnBook(Member member, Book book) {
+		// Implement logic to handle returning a book
+			isSuccess=false;
+			borrowingMessage="";
+			for(Book a : member.getBorrowedBooks()) {
+				if(book.getTitle().equals(a.getTitle())) {
+					isSuccess=true;
+					break;
+				}
+				
+			}
+			if(isSuccess== false) borrowingMessage = "The member has not borrowed the book";
+			
+			System.out.println("Returning book: " + book);
+			return result = new BorrowingBookResult(false, null);
+		}
+
+>>>>>>> Stashed changes
+}

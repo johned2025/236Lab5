@@ -26,29 +26,26 @@ public class Member {
 	}
 	public void borrowBook(Book book) {
 		BorrowingService borrowingService = new BorrowingService();
-		BorrowingBookResult result = borrowingService.borrowBook(this, book); 
-		if(result.isSuccess())
+		boolean success = borrowingService.borrowBook(this, book); 
+		if(success)
 		{
 		// print something
-			this.borrowedBooks.add(book);
-			  
-			System.out.println(result.getBorrowingMessage());
+			System.out.println("Book has been Borrowed");
 		} else {
 		// print something else
-			System.out.println(result.getBorrowingMessage());
+			System.out.println("Book could not be borrowed");
 		}
 	}
 	public void returnBook(Book book) {
 		BorrowingService borrowingService = new BorrowingService();
-		BorrowingBookResult result = borrowingService.returnBook(this, book); 
-		if(result.isSuccess())
+		boolean success = borrowingService.returnBook(this, book); 
+		if(success)
 		{
 		// print something
-			this.borrowedBooks.remove(book);
-			System.out.println(result.getBorrowingMessage());
+			System.out.println("Book has been Returned");
 		} else {
 		// print something else
-			System.out.println(result.getBorrowingMessage());
+			System.out.println("Book could not be returned");
 		}
 	}
 	public void listBorrowedBooks() {
