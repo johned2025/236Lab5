@@ -3,9 +3,15 @@ package lab5;
 public class LibrarianController {
 	
 	Library library; // Library dependency
+	PaperBookCreator paperBookFactory;
+	EBookCreator eBookFactory;
+	AudioBookCreator audioBookFactory;
 	
 	public LibrarianController( ) {
 		this.library = new Library(); // Constructor injection
+		this.paperBookFactory = new PaperBookCreator();
+		this.eBookFactory = new EBookCreator();
+		this.audioBookFactory = new AudioBookCreator();
 	}
 	public Library getLibrary() {
 		return this.library;
@@ -17,13 +23,16 @@ public class LibrarianController {
 		library.showMembers();
 	}
 	public void addPaperBook(String title) {
-		library.addBook(new PaperBook(title));  // Book class constructor dependency
+		//library.addBook(new PaperBook(title));  // Book class constructor dependency
+		addBook(paperBookFactory, title);
 	}
 	public void addEbook(String title) {
-		library.addBook(new Ebook(title));  // Book class constructor dependency
+		//library.addBook(new Ebook(title));  // Book class constructor dependency
+		addBook(eBookFactory, title);
 	}
 	public void addAudioBook(String title) {
-		library.addBook(new AudioBook(title));  // Book class constructor dependency
+		//library.addBook(new AudioBook(title));  // Book class constructor dependency
+		addBook(audioBookFactory, title);
 	}
 	public void addMember(String name) {
 		library.addMember(new Member(name)); // Member class constructor dependency
@@ -72,5 +81,9 @@ public class LibrarianController {
 			member.returnBook(book); // members returns book. 
 		else  	
 			System.out.println("Either book " + title + " or member " + name + " not found.");
+	}
+	
+	public void addBook(BookFactory factory, String title) {
+		library.addBook(factory.createBook(title));
 	}
 }

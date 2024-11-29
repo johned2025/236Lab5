@@ -16,7 +16,7 @@ public class Ebook implements Book{
 		this.title = title;
 	}
 	public String toString() {
-		return "Book: " + title;
+		return "E-Book: " + title;
 	}
 	public void setIsAvailable(boolean isAvailable) {
 		this.isAvailable = isAvailable;
