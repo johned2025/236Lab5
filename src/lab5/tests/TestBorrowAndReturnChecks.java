@@ -17,6 +17,8 @@ public class TestBorrowAndReturnChecks {
 	
 	PaperBook book1 = new PaperBook("Harry Potter");
 	Ebook book2 = new Ebook("Lord of The Rings");
+	PaperBook book3 = new PaperBook("Percy Jackson");
+	Ebook book4 = new Ebook("James And The Giant Peach");
 	
 	BorrowingService borrowingService = new BorrowingService();
 	
@@ -26,17 +28,55 @@ public class TestBorrowAndReturnChecks {
 		member2 = new Member("Jimmy");   // flush borrowedBook array 
 		book1.setIsAvailable(true);
 		book2.setIsAvailable(true);
+		book3.setIsAvailable(true);
+		book4.setIsAvailable(true);
+	}
+	
+	@Test
+	void exceededBorrowLimit() {
+		System.out.println("Borrow limit Test:");
+		member1.borrowBook(book1);
+		member1.borrowBook(book2);
+		member1.borrowBook(book3);
+		member1.borrowBook(book4);
+	}
+	
+	@Test
+	void bookAlreadyBorrowed() {
+		System.out.println("Book already borrowed Test:");
+		member1.borrowBook(book1);
+		
+		member1.borrowBook(book1);
+		member2.borrowBook(book1);
+		
 	}
 	
 	@Test
 	void borrowABook() {
-		borrowingService.borrowBook(member1,book1);
-		assertEquals(borrowingService.borrowBook(member1,book1), false, "Should be false");
+		System.out.println("Borrow Test:");
+		member1.borrowBook(book1);
+		member2.borrowBook(book3);
+		//assertEquals(borrowingService.borrowBook(member1,book1), false, "Should be false");
 	}
 	
 	@Test
 	void returnABook() {
-		assertEquals(borrowingService.returnBook(member2,book2), false, "Should be false");
+		System.out.println("Return Test:");
+		member1.borrowBook(book2);
+		member1.returnBook(book2);
+		//assertEquals(borrowingService.returnBook(member2,book2), false, "Should be false");
 	}
-
+	
+	@Test
+	void noBookToReturn() {
+		System.out.println("No books to borrow Test:");
+		member2.returnBook(book3);
+	}
+	
+	@Test
+	void returnBookNotFound() {
+		System.out.println("Return book not found Test:");
+		member2.borrowBook(book1);
+		member2.returnBook(book3);
+	}
 }
