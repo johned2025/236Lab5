@@ -19,13 +19,14 @@ public class TestBorrowAndReturnChecks {
 	Ebook book2 = new Ebook("Lord of The Rings");
 	PaperBook book3 = new PaperBook("Percy Jackson");
 	Ebook book4 = new Ebook("James And The Giant Peach");
-	
+
+	private BorrowingService service = BorrowingService.getInstance();
 	BorrowingService borrowingService = new BorrowingService();
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		member1 = new Member("Jane"); // flush borrowedBook array 
-		member2 = new Member("Jimmy");   // flush borrowedBook array 
+		member1 = new Member("Jane",service); // flush borrowedBook array 
+		member2 = new Member("Jimmy",service);   // flush borrowedBook array 
 		book1.setIsAvailable(true);
 		book2.setIsAvailable(true);
 		book3.setIsAvailable(true);

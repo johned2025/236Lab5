@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import lab5.Member;
 import lab5.Library;
+import lab5.BorrowingService;
 import lab5.LibrarianController;
 
 class TestController {

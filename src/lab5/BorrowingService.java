@@ -4,6 +4,12 @@ public class BorrowingService implements BorrowingServiceAPI{
 	BorrowingBookResult result;
 	boolean isSuccess=true;
 	String borrowingMessage;
+	
+	private static BorrowingService instance; 
+	private int borrowingLimit; 
+	public BorrowingService() { 
+	borrowingLimit = 3;
+	}
 	@Override
 	// Here you can implement logic to check if the book is available to
 	// borrow and if the member can borrow it
@@ -42,6 +48,14 @@ public class BorrowingService implements BorrowingServiceAPI{
 			
 			return new BorrowingBookResult(false, "Book '" + book.getTitle() + "' was not found in the member's borrowed books for member: '" + member.getName() + "'.");
 			
+		}
+		public static BorrowingService getInstance() {
+			// TODO Auto-generated method stub
+			if (instance == null) {
+	            instance = new BorrowingService(); 
+	        }
+
+			return instance;
 		}
 
 

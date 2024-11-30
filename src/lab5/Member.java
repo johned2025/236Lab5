@@ -7,10 +7,12 @@ public class Member {
 
 	private String name;
 	public ArrayList<Book> borrowedBooks; // Book class dependency
+	private BorrowingService borrowingService;
 	
-	public Member(String name) {
+	public Member(String name, BorrowingService service) {
 		this.name = name;
 		this.borrowedBooks = new ArrayList<>();
+		this.borrowingService = service;
 	}
 	public String getName() {
 		return name;
@@ -25,7 +27,7 @@ public class Member {
 		return "Member: " + name;
 	}
 	public void borrowBook(Book book) {
-		BorrowingService borrowingService = new BorrowingService();
+		BorrowingService borrowingService = BorrowingService.getInstance();
 		BorrowingBookResult result = borrowingService.borrowBook(this, book); 
 		if(result.isSuccess())
 		{
@@ -38,6 +40,7 @@ public class Member {
 			System.out.println(result.getBorrowingMessage());
 		}
 	}
+
 	public void returnBook(Book book) {
 		BorrowingService borrowingService = new BorrowingService();
 		BorrowingBookResult result = borrowingService.returnBook(this, book); 
@@ -66,4 +69,8 @@ public class Member {
 	    }
 	    borrowedBooks.clear(); // clear array of borrowed books
 	}
+	public BorrowingService getBorrowingService() {
+	    return this.borrowingService;
+	}
+
 }
